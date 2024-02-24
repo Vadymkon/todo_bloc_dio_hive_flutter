@@ -3,19 +3,23 @@ import 'package:bloc/bloc.dart';
 import 'package:crypt/crypt.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../note_class/note_class.dart';
+import '../note.dart';
 
 part 'note_event.dart';
 part 'note_state.dart';
 
 class NoteBloc extends Bloc<NoteEvent, NoteState> {
-  NoteBloc() : super(NoteState()) {
+  // final NotesReposBloc noteRepository;
+  //(this.noteRepository)
+  NoteBloc() : super(const NoteState()) {
     on<NoteAddEvent>(_onAddNote);
     on<NoteRemoveEvent>(_onRemoveNote);
     on<NoteReadyChangeEvent>(_onChangeReadyNote);
     on<NoteCategoryChangeEvent>(_onChangeCategoryNote);
     // on<NoteFilteredEvent>(_onFilteredNote);
   }
+
+//TODO: adaptize all staff for Hive
 
   _onAddNote(NoteAddEvent event, Emitter<NoteState>emit) {
     if (event.name.trim().isEmpty) return; // do not add new note if name is empty

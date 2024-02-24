@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todo_bloc_dio_hive_flutter/categories_list.dart';
 import 'package:todo_bloc_dio_hive_flutter/notes_bloc/note_bloc.dart';
 import 'package:todo_bloc_dio_hive_flutter/popup_menus/add_note.dart';
 import 'package:todo_bloc_dio_hive_flutter/popup_menus/change_category_menu.dart';
+
+//TODO: StateSafe (SOLID safety)
+//TODO: Filtering (another event)
+//TODO: WeatherBloc & WeatherWidget
 
 class MyHomePage extends StatelessWidget {
   const MyHomePage({Key? key}) : super (key: key);
@@ -23,7 +28,9 @@ class MyHomePage extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
-
+            const Text('Filters', style: TextStyle(fontSize: 30),),
+            const DropdownMenu(dropdownMenuEntries: readyStates),
+            const DropdownMenu(dropdownMenuEntries: categories),
             Container(
               constraints: BoxConstraints(maxHeight: 420),
               child: BlocBuilder<NoteBloc, NoteState>(
