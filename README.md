@@ -5,7 +5,7 @@ Test-task for jun Flutter-dev offer.
 Using Flutter, BLoC, SOLID and other make ToDo application with filtering and Weather Widget.
 
 ## Used techs:
-Flutter, BLoC(state-management), Hive(data-store), Dio(Http_client)
+Flutter, BLoC(state-management), Hive(data-store), Dio(Http_client) 
 
 ### Why Dio?
 * Comparing with standard http - it has bigger functional.
