@@ -23,3 +23,5 @@ class Note {
     this.category = ""
   });
 }
+
+//Class for Notes

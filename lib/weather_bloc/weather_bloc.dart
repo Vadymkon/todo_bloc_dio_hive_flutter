@@ -34,7 +34,7 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
    _getWeatherInfo(WeatherGetInfoEvent event, Emitter<WeatherState> emit) async {
      final res = await _httpClient.get(apiUrl, queryParameters:
      {
-     // ?q=Kyiv&APPID=$apiKey
+     // example: ?q=Kyiv&APPID=$apiKey
        'q':event.queryCity,
        'APPID':apiKey,
      });

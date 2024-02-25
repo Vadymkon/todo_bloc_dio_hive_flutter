@@ -10,11 +10,11 @@ import '../note.dart';
 part 'note_event.dart';
 part 'note_state.dart';
 
+//BLoC for TODOs/Notes
 class NoteBloc extends Bloc<NoteEvent, NoteState> {
   // final NotesReposBloc noteRepository;
-  final Box<Note> _noteBox = boxNotes;
+  final Box<Note> _noteBox = boxNotes; //get link to box (opened in main)
 
-  //(this.noteRepository)
   NoteBloc() : super(NoteState()) {
     on<NoteAddEvent>(_onAddNote);
     on<NoteRemoveEvent>(_onRemoveNote);
@@ -25,6 +25,7 @@ class NoteBloc extends Bloc<NoteEvent, NoteState> {
 
     add(NoteFetchEvent()); //get data
   }
+
 
   _onAddNote(NoteAddEvent event, Emitter<NoteState>emit) async {
     if (event.name

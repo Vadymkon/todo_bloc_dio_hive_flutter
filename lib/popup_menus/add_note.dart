@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../notes_bloc/note_bloc.dart';
 
+//Pop-up menu for adding new Note
 Future<void> addNoteMenu(BuildContext context) async {
   TextEditingController nameCont = TextEditingController();
   TextEditingController descrCont = TextEditingController();
@@ -19,6 +20,7 @@ Future<void> addNoteMenu(BuildContext context) async {
               //menu adding
               Column(
                 children: [
+                  // Put Name of Note
                   TextField(
                     decoration: const InputDecoration(
                       fillColor: Colors.white,
@@ -28,6 +30,7 @@ Future<void> addNoteMenu(BuildContext context) async {
                     controller: nameCont,
                   ),
                   Container(height: 10,),
+                  //Put Descr of Note
                   TextField(
                     decoration: const InputDecoration(
                       fillColor: Colors.white,
@@ -45,6 +48,7 @@ Future<void> addNoteMenu(BuildContext context) async {
           ),
         ),
         actions: <Widget>[
+          //Main action-button there
           TextButton(
             child: const Text('Add'),
             onPressed: () {

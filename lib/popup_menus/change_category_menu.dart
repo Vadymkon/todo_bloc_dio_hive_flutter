@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../categories_list.dart';
 import '../notes_bloc/note_bloc.dart';
 
+//Menu for changing ready state of Note
 Future<void> changeReadyState(BuildContext context, String category, String id) async {
   return showDialog<void>(
     context: context,
@@ -21,6 +22,7 @@ Future<void> changeReadyState(BuildContext context, String category, String id) 
                   dropdownMenuEntries: categories,
                   onSelected:
                       (value){
+                  //CHANGING HERE
                     BlocProvider.of<NoteBloc>(context).add(
                         NoteCategoryChangeEvent(
                             id,value.toString()));
@@ -30,6 +32,7 @@ Future<void> changeReadyState(BuildContext context, String category, String id) 
           ),
         ),
         actions: <Widget>[
+          //Just go back button
           TextButton(
             child: const Text('Approve'),
             onPressed: () {

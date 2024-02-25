@@ -1,7 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+// groups for notes
 const List<DropdownMenuEntry<String>> categories = [
   DropdownMenuEntry(value: '', label: ''),
   DropdownMenuEntry(value: 'Job', label: 'Job'),
@@ -9,6 +9,7 @@ const List<DropdownMenuEntry<String>> categories = [
   DropdownMenuEntry(value: 'Own', label: 'Own'),
 ];
 
+//ready states
 const List<DropdownMenuEntry<String>> readyStates = [
   DropdownMenuEntry(value: '', label: ''),
   DropdownMenuEntry(value: 'ready', label: 'ready'),
@@ -25,4 +26,4 @@ const Map<String,IconData> weatherMap =
   'Sun' : CupertinoIcons.sun_dust,
   'Lightning' : CupertinoIcons.cloud_bolt_rain,
   'Clouds' : CupertinoIcons.cloud
-};
+}; //Icons for different weather

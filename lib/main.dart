@@ -14,7 +14,7 @@ void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(NoteAdapter());
   boxNotes = await Hive.openBox<Note>('noteBox');
-//Other staff
+//App
   runApp(const MyApp());
 }
 

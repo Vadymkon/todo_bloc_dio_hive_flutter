@@ -6,6 +6,7 @@ import 'package:todo_bloc_dio_hive_flutter/notes_bloc/note_bloc.dart';
 import 'package:todo_bloc_dio_hive_flutter/popup_menus/add_note.dart';
 import 'package:todo_bloc_dio_hive_flutter/popup_menus/change_category_menu.dart';
 
+//Screen for filtering Notes
 class FilterScreen extends StatelessWidget {
   const FilterScreen({Key? key}) : super (key: key);
 
@@ -31,6 +32,7 @@ class FilterScreen extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  //FILTER 1 - READY
                   DropdownMenu(
                     label: const Text('Ready/Not Ready'),
                     dropdownMenuEntries: readyStates,
@@ -38,6 +40,7 @@ class FilterScreen extends StatelessWidget {
                       //filter
                       BlocProvider.of<NoteBloc>(context).add(NoteFilteredEvent(null,value));
                     },),
+                  //FILTER 2 - CATEGORY
                   DropdownMenu(
                     label: const Text('Group'),
                     dropdownMenuEntries: categories,
@@ -49,6 +52,7 @@ class FilterScreen extends StatelessWidget {
               ),
             ),
 
+            //NOTE LISTVIEW
             Container(
               constraints: const BoxConstraints(maxHeight: 520),
               child: BlocBuilder<NoteBloc, NoteState>(
@@ -87,13 +91,7 @@ class FilterScreen extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          addNoteMenu(context);
-        },
-        tooltip: 'Add new element',
-        child: const Icon(Icons.add),
-      ),
+
     );
   }
 }
