@@ -10,7 +10,7 @@ const List<DropdownMenuEntry<String>> categories = [
 
 const List<DropdownMenuEntry<String>> readyStates = [
   DropdownMenuEntry(value: '', label: ''),
-  DropdownMenuEntry(value: 'true', label: 'ready'),
-  DropdownMenuEntry(value: 'false', label: 'not ready'),
+  DropdownMenuEntry(value: 'ready', label: 'ready'),
+  DropdownMenuEntry(value: 'not ready', label: 'not ready'),
 ];
 

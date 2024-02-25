@@ -20,7 +20,8 @@ class NoteBloc extends Bloc<NoteEvent, NoteState> {
     on<NoteReadyChangeEvent>(_onChangeReadyNote);
     on<NoteCategoryChangeEvent>(_onChangeCategoryNote);
     on<NoteFetchEvent>(_onFetchNote);
-    // on<NoteFilteredEvent>(_onFilteredNote);
+    on<NoteFilteredEvent>(_onFilteredNote);
+
     add(NoteFetchEvent()); //get data
   }
 
@@ -58,7 +59,8 @@ class NoteBloc extends Bloc<NoteEvent, NoteState> {
     note.category = event.category; //edit parameter
     _noteBox.put(event.id, note); //put new value
 
-    emit(NoteState(notes: _noteBox.values.toList())); //new list is on
+
+    emit(NoteState(notes: _noteBox.values.toList()));
   }
 
   //get data
@@ -68,6 +70,23 @@ class NoteBloc extends Bloc<NoteEvent, NoteState> {
     emit(NoteState(notes: _noteBox.values.toList()));
   }
 
+  //filter list
+  _onFilteredNote(NoteFilteredEvent event, Emitter<NoteState>emit) {
+    if (event.category == null && event.ready == null) return; //obvious script for exit
+    List<Note> notes = _noteBox.values.toList(); //get original DB
 
-  // _onFilteredNote(NoteFilteredEvent event, Emitter<NoteState>emit) {}
+    //filter 1 - category
+    if (event.category?.trim().length != 0) { //isNotEmpty (yep, we're using ==0 instead, bcs in other way we need to rebuild big part of logic)
+      notes = notes.where((element) => element.category == event.category).toList();
+    }
+    //filter 2 - ready
+    if (event.ready?.trim().length != 0)
+      {
+        bool readyness = false;
+        if (event.ready == 'ready') readyness = true;
+        notes = notes.where((element) => element.ready == readyness).toList();
+      }
+
+    emit(NoteState(notes: notes));
+  }
 }
