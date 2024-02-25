@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_bloc_dio_hive_flutter/categories_list.dart';
-import 'package:todo_bloc_dio_hive_flutter/filter_screen.dart';
+import 'package:todo_bloc_dio_hive_flutter/screens/filter_screen.dart';
 import 'package:todo_bloc_dio_hive_flutter/notes_bloc/note_bloc.dart';
 import 'package:todo_bloc_dio_hive_flutter/popup_menus/add_note.dart';
 import 'package:todo_bloc_dio_hive_flutter/popup_menus/change_category_menu.dart';
+
+import 'weather_screen.dart';
 
 //TODO: WeatherBloc & WeatherWidget
 
@@ -19,7 +21,16 @@ class MyHomePage extends StatelessWidget {
     String categoryController = '';
     return Scaffold(
       appBar: AppBar(
-
+        leading: IconButton(icon: const Icon(Icons.cloud_outlined),
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(
+                  builder: (_) =>
+                      BlocProvider.value(
+                          value: NoteBloc(),
+                          child: const WeatherScreen()),
+                ));
+          },),
         backgroundColor: Theme
             .of(context)
             .colorScheme

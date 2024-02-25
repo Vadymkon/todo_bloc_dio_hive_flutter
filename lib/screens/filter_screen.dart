@@ -12,8 +12,6 @@ class FilterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final notes = context.select((NoteBloc nbloc) => nbloc.state.notes);
-    String readyController = '';
-    String categoryController = '';
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme
@@ -37,19 +35,15 @@ class FilterScreen extends StatelessWidget {
                     label: const Text('Ready/Not Ready'),
                     dropdownMenuEntries: readyStates,
                     onSelected: (value) {
-                      readyController = value!; //value saving
                       //filter
-                      BlocProvider.of<NoteBloc>(context).add(NoteFilteredEvent(
-                          categoryController, readyController));
+                      BlocProvider.of<NoteBloc>(context).add(NoteFilteredEvent(null,value));
                     },),
                   DropdownMenu(
                     label: const Text('Group'),
                     dropdownMenuEntries: categories,
                     onSelected: (value) {
-                      categoryController = value!; //value saving
                       //filter
-                      BlocProvider.of<NoteBloc>(context).add(NoteFilteredEvent(
-                          categoryController, readyController));
+                      BlocProvider.of<NoteBloc>(context).add(NoteFilteredEvent(value,null));
                     },),
                 ],
               ),
