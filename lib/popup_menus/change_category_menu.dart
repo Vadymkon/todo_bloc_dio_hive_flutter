@@ -24,6 +24,7 @@ Future<void> changeReadyState(BuildContext context, String category, String id) 
                     BlocProvider.of<NoteBloc>(context).add(
                         NoteCategoryChangeEvent(
                             id,value.toString()));
+                    Navigator.of(context).pop();
                   }),
             ],
           ),

@@ -30,6 +30,8 @@ class NoteReadyChangeEvent extends NoteEvent {
   NoteReadyChangeEvent(this.id, this.ready);
 }
 
+class NoteFetchEvent extends NoteEvent {}
+
 // class NoteFilteredEvent extends NoteEvent {
 //   final String? category;
 //   final bool? ready;

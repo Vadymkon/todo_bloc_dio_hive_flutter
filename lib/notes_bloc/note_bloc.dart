@@ -1,7 +1,8 @@
-
 import 'package:bloc/bloc.dart';
 import 'package:crypt/crypt.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:todo_bloc_dio_hive_flutter/boxes.dart';
 
 import '../note.dart';
 
@@ -10,54 +11,63 @@ part 'note_state.dart';
 
 class NoteBloc extends Bloc<NoteEvent, NoteState> {
   // final NotesReposBloc noteRepository;
+  final Box<Note> _noteBox = boxNotes;
+
   //(this.noteRepository)
   NoteBloc() : super(const NoteState()) {
     on<NoteAddEvent>(_onAddNote);
     on<NoteRemoveEvent>(_onRemoveNote);
     on<NoteReadyChangeEvent>(_onChangeReadyNote);
     on<NoteCategoryChangeEvent>(_onChangeCategoryNote);
+    on<NoteFetchEvent>(_onFetchNote);
     // on<NoteFilteredEvent>(_onFilteredNote);
+    add(NoteFetchEvent()); //get data
   }
 
-//TODO: adaptize all staff for Hive
-
-  _onAddNote(NoteAddEvent event, Emitter<NoteState>emit) {
+  _onAddNote(NoteAddEvent event, Emitter<NoteState>emit) async {
     if (event.name.trim().isEmpty) return; // do not add new note if name is empty
+    // emit(state.copyWith(isLoading: false));
     //add new note
-    List<Note> notes = [];
-    notes.addAll(state.notes);//make a copy of list for adding
-    notes.add(Note( //add a new element
+    final Note newNote = Note( //add a new element
         name: event.name,
         descr: event.descr,
-        id: Crypt.sha512(event.name).toString().substring(0,6) )); //get unic ID
-    emit(NoteState(notes: notes)); //new list is on
+        id: Crypt.sha512(event.name).toString().substring(0,6) ); //get unic ID
+    await _noteBox.put(newNote.id, newNote); //put in box value
+
+    emit(NoteState(notes: _noteBox.values.toList())); //new list is on
   }
 
   _onRemoveNote(NoteRemoveEvent event, Emitter<NoteState>emit) {
-    List<Note> notes = [];
-    notes.addAll(state.notes);//make a copy of list for adding
-    notes.removeWhere((element) => element.id == event.id); //remove note by id
-    emit(NoteState(notes: notes));
+    _noteBox.delete(event.id);
+    emit(NoteState(notes: _noteBox.values.toList())); //new list is on
   }
 
   _onChangeReadyNote(NoteReadyChangeEvent event, Emitter<NoteState>emit) {
-    int index = state.notes.indexWhere((element) => element.id == event.id); //get index of element
-    if (index == -1) return; //safety
-    List<Note> notes = [];
-    notes.addAll(state.notes);//make a copy of list for adding
-    notes[index].ready = event.ready; // change ready-state
-    emit(NoteState(notes: notes));
+    final Note? note = _noteBox.get(event.id); //get example of this note
+    if (note == null) return; //check
+    note.ready = event.ready; //edit parameter
+    _noteBox.put(event.id, note); //put new value
+
+    emit(NoteState(notes: _noteBox.values.toList())); //new list is on
   }
 
+  //analog for category
   _onChangeCategoryNote(NoteCategoryChangeEvent event, Emitter<NoteState>emit) {
-    int index = state.notes.indexWhere((element) => element.id == event.id); //index with same if
-    if (index == -1) return; //safety
+    final Note? note = _noteBox.get(event.id); //get example of this note
+    if (note == null) return; //check
+    note.category = event.category; //edit parameter
+    _noteBox.put(event.id, note); //put new value
 
-    List<Note> notes = [];
-    notes.addAll(state.notes);//make a copy of list for adding
-    notes[index].category = event.category; //change
-    emit(NoteState(notes: notes));
+    emit(NoteState(notes: _noteBox.values.toList())); //new list is on
   }
+
+  //get data
+  _onFetchNote (NoteFetchEvent event, Emitter<NoteState> emit) async {
+    // emit(state.copyWith(isLoading: true));
+
+    emit(NoteState(notes: _noteBox.values.toList()));
+  }
+
 
   // _onFilteredNote(NoteFilteredEvent event, Emitter<NoteState>emit) {}
 }
